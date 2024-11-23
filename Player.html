@@ -6,41 +6,72 @@
     <title>Atlántico Radio Player</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
         }
 
         #player-container {
-            width: 600px; /* Ajustado al tamaño del archivo de fondo */
-            height: 300px; /* Ajustado al tamaño del archivo de fondo */
-            margin: 0 auto;
+            width: 1200px; /* Ancho del fondo */
+            height: 600px; /* Alto del fondo */
             background: url('PLAYER FONDO.png') no-repeat center center;
             background-size: cover;
             position: relative;
-            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        audio {
+        /* Reproductor de audio */
+        #audio-player {
             position: absolute;
-            top: 33%; /* Un tercio desde la parte superior */
-            left: 33%; /* Un tercio desde la parte izquierda */
-            width: 300px; /* Tamaño del reproductor */
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
+            top: 40%; /* Ubicación del reproductor */
+            left: 30%;
+            width: 500px;
         }
 
+        /* Información de la canción */
+        #track-info {
+            position: absolute;
+            top: 10%; /* Ubicación de la información */
+            left: 10%;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        #track-info img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        #track-info .details {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        /* Linktree */
         .linktree {
             position: absolute;
-            bottom: 20px; /* Colocado cerca de la parte inferior */
-            left: 20px; /* Colocado en la esquina izquierda */
-            font-size: 14px;
+            bottom: 20px;
+            right: 20px;
+            font-size: 18px;
         }
 
         .linktree a {
             text-decoration: none;
-            color: #ff6600; /* Color destacado */
+            color: #ff6600;
+            font-weight: bold;
         }
 
         .linktree a:hover {
@@ -50,6 +81,15 @@
 </head>
 <body>
     <div id="player-container">
+        <!-- Información de la canción -->
+        <div id="track-info">
+            <img id="track-cover" src="PLAYER FONDO.png" alt="Logo de Atlántico Radio">
+            <div class="details">
+                <div id="track-artist">Cargando artista...</div>
+                <div id="track-title">Cargando título...</div>
+            </div>
+        </div>
+
         <!-- Reproductor de audio -->
         <audio id="audio-player" controls autoplay muted>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
@@ -62,17 +102,20 @@
         </div>
     </div>
 
-    <!-- Script para forzar reproducción automática -->
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.muted = false; // Desactiva el silencio al cargar la página
+            const trackArtist = document.getElementById('track-artist');
+            const trackTitle = document.getElementById('track-title');
+            const trackCover = document.getElementById('track-cover');
 
-            // Intenta reproducir el audio
-            audioPlayer.play().catch(error => {
-                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
-            });
-        });
-    </script>
-</body>
-</html>
+            // Quitar mute del reproductor al cargar
+            audioPlayer.muted = false;
+
+            // Simular la obtención de datos de la canción (personalizable con API)
+            function fetchTrackInfo() {
+                // Aquí puedes integrar la lógica para obtener metadatos del stream o de una API externa
+                const trackData = {
+                    artist: 'Artista desconocido',
+                    title: 'Título desconocido',
+                    cover
