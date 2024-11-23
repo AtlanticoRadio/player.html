@@ -6,120 +6,131 @@
     <title>Atlántico Radio Player</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
         }
 
         #player-container {
-            width: 300px;
-            height: 520px;
-            margin: 20px auto;
-            padding: 10px;
+            width: 1200px; /* Ancho del fondo */
+            height: 600px; /* Alto del fondo */
             background: url('PLAYER FONDO.png') no-repeat center center;
             background-size: cover;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            color: #333;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
         }
 
-        audio {
-            width: 100%;
-            margin-top: 20px;
+        /* Reproductor de audio */
+        #audio-player {
+            position: absolute;
+            top: 40%; /* Ubicación del reproductor */
+            left: 30%;
+            width: 500px;
         }
 
-        .links {
-            text-align: center;
-            margin: 10px 0;
+        /* Información de la canción */
+        #track-info {
+            position: absolute;
+            top: 10%; /* Ubicación de la información */
+            left: 10%;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        .links a {
+        #track-info img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        #track-info .details {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        /* Linktree */
+        .linktree {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 18px;
+        }
+
+        .linktree a {
             text-decoration: none;
-            margin: 0 5px;
-            font-size: 14px;
             color: #ff6600;
+            font-weight: bold;
         }
 
-        .links a:hover {
+        .linktree a:hover {
             text-decoration: underline;
-        }
-
-        .frequencies {
-            font-size: 12px;
-            text-align: left;
-            margin-top: 20px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-        }
-
-        .frequencies h4 {
-            margin: 0 0 10px 0;
-            color: #333;
-        }
-
-        .frequencies ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .frequencies ul li {
-            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
     <div id="player-container">
+        <!-- Información de la canción -->
+        <div id="track-info">
+            <img id="track-cover" src="PLAYER FONDO.png" alt="Logo de Atlántico Radio">
+            <div class="details">
+                <div id="track-artist">Cargando artista...</div>
+                <div id="track-title">Cargando título...</div>
+            </div>
+        </div>
+
         <!-- Reproductor de audio -->
         <audio id="audio-player" controls autoplay muted>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
             Tu navegador no soporta este reproductor.
         </audio>
-        
-        <!-- Enlaces a redes sociales, iVoox y correo -->
-        <div class="links">
-            <a href="https://www.atlanticoradio.es" target="_blank">Web</a>
-            <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
-            <a href="https://x.com/atlantico_radio" target="_blank">X</a>
-            <a href="https://www.ivoox.com/escuchar-atlantico-radio_nq_1406464_1.html" target="_blank">iVoox</a>
-            <a href="mailto:hola@atlanticoradio.es">Correo</a>
-        </div>
 
-        <!-- Frecuencias -->
-        <div class="frequencies">
-            <h4>Frecuencias:</h4>
-            <ul>
-                <li><b>Tenerife:</b></li>
-                <li>Santa Cruz - 88.3 FM</li>
-                <li>La Laguna - 91.7 FM</li>
-                <li>Zona Sur - 93.7 FM</li>
-                <li>Zona Norte - 88.1 FM</li>
-                <li>Icod De Los Vinos - 102.6 FM</li>
-                <li><b>La Gomera:</b></li>
-                <li>San Sebastián - 94.7 FM</li>
-                <li>Valle Gran Rey - 88.9 FM</li>
-                <li><b>La Palma:</b></li>
-                <li>Los Llanos de Aridane - 94.6 FM</li>
-                <li>Breña Alta - 88.5 FM</li>
-                <li><b>El Hierro:</b></li>
-                <li>Valverde - 99.7 FM</li>
-                <li>Frontera - 88.6 FM</li>
-            </ul>
+        <!-- Linktree -->
+        <div class="linktree">
+            <a href="https://linktr.ee/atlanticoradio" target="_blank">Visita nuestro Linktree</a>
         </div>
     </div>
 
-    <!-- Script para forzar reproducción automática -->
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.muted = false; // Desactiva el silencio al cargar la página
+            const trackArtist = document.getElementById('track-artist');
+            const trackTitle = document.getElementById('track-title');
+            const trackCover = document.getElementById('track-cover');
 
-            // Intenta reproducir el audio
+            // Quitar mute del reproductor al cargar
+            audioPlayer.muted = false;
+
+            // Simular la obtención de datos de la canción (personalizable con API)
+            function fetchTrackInfo() {
+                // Aquí puedes integrar la lógica para obtener metadatos del stream o de una API externa
+                const trackData = {
+                    artist: 'Artista desconocido',
+                    title: 'Título desconocido',
+                    cover: 'PLAYER FONDO.png' // Imagen de respaldo
+                };
+
+                // Actualizar la interfaz con la información de la canción
+                trackArtist.textContent = trackData.artist;
+                trackTitle.textContent = trackData.title;
+                trackCover.src = trackData.cover;
+            }
+
+            // Cargar información de la canción
+            fetchTrackInfo();
+
+            // Forzar reproducción automática
             audioPlayer.play().catch(error => {
                 console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
             });
