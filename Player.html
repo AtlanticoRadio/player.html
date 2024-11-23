@@ -30,7 +30,7 @@
         /* Información de la canción */
         #track-info {
             position: absolute;
-            top: 50%; /* Posicionado hacia el centro */
+            top: 40%; /* Posicionado hacia el centro */
             left: 50%;
             transform: translate(-50%, -50%);
             color: #ffffff;
@@ -52,7 +52,7 @@
         /* Reproductor de audio */
         #audio-player {
             position: absolute;
-            top: 70%; /* Más abajo, cerca del centro */
+            top: 65%; /* Más abajo, cerca del centro */
             left: 50%;
             transform: translateX(-50%);
             width: 400px;
@@ -83,9 +83,9 @@
     <div id="player-container">
         <!-- Información de la canción -->
         <div id="track-info">
-            <img id="track-cover" src="PLAYER FONDO.png" alt="Logo de Atlántico Radio">
-            <div id="track-artist">Cargando artista...</div>
-            <div id="track-title">Cargando título...</div>
+            <img id="track-cover" src="ATLANTICO RADIO REDES.jpg" alt="Logo de Atlántico Radio">
+            <div id="track-artist">Atlántico Radio</div>
+            <div id="track-title">La radio de la que todos hablan</div>
         </div>
 
         <!-- Reproductor de audio -->
@@ -93,3 +93,68 @@
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
             Tu navegador no soporta este reproductor.
         </audio>
+
+        <!-- Linktree -->
+        <div class="linktree">
+            <a href="https://linktr.ee/atlanticoradio" target="_blank">Visita nuestro Linktree</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audio-player');
+            const trackArtist = document.getElementById('track-artist');
+            const trackTitle = document.getElementById('track-title');
+            const trackCover = document.getElementById('track-cover');
+
+            // Quitar mute del reproductor al cargar
+            audioPlayer.muted = false;
+
+            // Obtener metadatos del stream (simulado)
+            async function fetchStreamMetadata() {
+                // Simulación de los metadatos extraídos del stream
+                const streamMetadata = {
+                    artist: null, // No disponible
+                    title: null // No disponible
+                };
+
+                // Buscar información en la API de iTunes si hay datos
+                if (streamMetadata.artist && streamMetadata.title) {
+                    const query = `${streamMetadata.artist} ${streamMetadata.title}`;
+                    const iTunesApiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&limit=1`;
+
+                    try {
+                        const response = await fetch(iTunesApiUrl);
+                        const data = await response.json();
+
+                        if (data.results && data.results.length > 0) {
+                            const track = data.results[0];
+
+                            // Actualizar información en la interfaz
+                            trackArtist.textContent = track.artistName;
+                            trackTitle.textContent = track.trackName;
+                            trackCover.src = track.artworkUrl100.replace("100x100", "300x300");
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('Error al obtener datos de iTunes:', error);
+                    }
+                }
+
+                // Si no hay datos, usar valores predeterminados
+                trackArtist.textContent = "Atlántico Radio";
+                trackTitle.textContent = "La radio de la que todos hablan";
+                trackCover.src = "ATLANTICO RADIO REDES.jpg";
+            }
+
+            // Cargar metadatos de la canción
+            fetchStreamMetadata();
+
+            // Forzar reproducción automática
+            audioPlayer.play().catch(error => {
+                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
+            });
+        });
+    </script>
+</body>
+</html>
