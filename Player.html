@@ -7,66 +7,91 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #ffffff;
+            background-color: #fff;
+            color: #333;
             margin: 0;
             padding: 0;
+            text-align: center;
         }
 
         #player-container {
-            width: 600px; /* Ajustado al tamaño del archivo de fondo */
-            height: 300px; /* Ajustado al tamaño del archivo de fondo */
-            margin: 0 auto;
-            background: url('PLAYER FONDO.png') no-repeat center center;
-            background-size: cover;
-            position: relative;
-            color: #ffffff;
+            width: 300px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #cover {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
         }
 
         audio {
-            position: absolute;
-            top: 33%; /* Un tercio desde la parte superior */
-            left: 33%; /* Un tercio desde la parte izquierda */
-            width: 300px; /* Tamaño del reproductor */
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .linktree {
-            position: absolute;
-            bottom: 20px; /* Colocado cerca de la parte inferior */
-            left: 20px; /* Colocado en la esquina izquierda */
-            font-size: 14px;
+        .links {
+            margin-top: 20px;
         }
 
-        .linktree a {
+        .links a {
             text-decoration: none;
-            color: #ff6600; /* Color destacado */
+            margin: 0 10px;
+            font-size: 14px;
+            color: #ff6600; /* Color inspirado en el logo */
         }
 
-        .linktree a:hover {
+        .links a:hover {
             text-decoration: underline;
+        }
+
+        .logo-placeholder {
+            display: none;
+        }
+
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            margin: 0 5px;
         }
     </style>
 </head>
 <body>
     <div id="player-container">
-        <!-- Reproductor de audio -->
-        <audio id="audio-player" controls autoplay muted>
+        <img id="cover" src="ATLANTICO RADIO REDES.jpg" alt="Carátula" onerror="this.src='ATLANTICO RADIO REDES.jpg'">
+        <audio controls autoplay>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
             Tu navegador no soporta este reproductor.
         </audio>
-
-        <!-- Linktree -->
-        <div class="linktree">
-            <a href="https://linktr.ee/atlanticoradio" target="_blank">Visita nuestro Linktree</a>
+        <div class="links">
+            <a href="https://www.atlanticoradio.es" target="_blank">Web</a>
+            <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
+            <a href="https://x.com/atlantico_radio" target="_blank">X</a>
+            <a href="https://www.diariodeavisos.com/" target="_blank">Diario de Avisos</a>
         </div>
     </div>
 
-    <!-- Script para forzar reproducción automática -->
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.muted = false; // Desactiva el silencio al cargar la página
+        // Abrir en una ventana emergente
+        function openPlayerPopup() {
+            const width = 320;
+            const height = 480;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+            const popup = window.open(
+                'player.html', // Cambiar esto a la URL donde esté alojado el reproductor
+                'Atlántico Radio Player',
+                `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no`
+            );
+            if (!popup) alert('Habilita las ventanas emergentes para abrir el reproductor.');
+        }
 
-            // Intenta reproducir el audio
-            audioPlayer.play().
+        // Llamada de prueba (opcional: vincularla a un botón o enlace en tu web principal)
+        // openPlayerPopup();
+    </script>
+</body>
+</html>
