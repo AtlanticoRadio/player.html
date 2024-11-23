@@ -7,91 +7,123 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #fff;
-            color: #333;
+            background-color: #ffffff;
             margin: 0;
             padding: 0;
-            text-align: center;
         }
 
         #player-container {
             width: 300px;
+            height: 520px;
             margin: 20px auto;
             padding: 10px;
-            border: 1px solid #ddd;
+            background: url('PLAYER FONDO.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        #cover {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         audio {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .links {
-            margin-top: 20px;
+            text-align: center;
+            margin: 10px 0;
         }
 
         .links a {
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 5px;
             font-size: 14px;
-            color: #ff6600; /* Color inspirado en el logo */
+            color: #ff6600;
         }
 
         .links a:hover {
             text-decoration: underline;
         }
 
-        .logo-placeholder {
-            display: none;
+        .frequencies {
+            font-size: 12px;
+            text-align: left;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
         }
 
-        .social-links img {
-            width: 24px;
-            height: 24px;
-            margin: 0 5px;
+        .frequencies h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .frequencies ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .frequencies ul li {
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
     <div id="player-container">
-        <img id="cover" src="ATLANTICO RADIO REDES.jpg" alt="Carátula" onerror="this.src='ATLANTICO RADIO REDES.jpg'">
-        <audio controls autoplay>
+        <!-- Reproductor de audio -->
+        <audio id="audio-player" controls autoplay muted>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
             Tu navegador no soporta este reproductor.
         </audio>
+        
+        <!-- Enlaces a redes sociales, iVoox y correo -->
         <div class="links">
-            <a href="https://www.atlanticoradio.com" target="_blank">Web</a>
+            <a href="https://www.atlanticoradio.es" target="_blank">Web</a>
             <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
             <a href="https://x.com/atlantico_radio" target="_blank">X</a>
-            <a href="https://www.diariodeavisos.com/" target="_blank">Diario de Avisos</a>
+            <a href="https://www.ivoox.com/escuchar-atlantico-radio_nq_1406464_1.html" target="_blank">iVoox</a>
+            <a href="mailto:hola@atlanticoradio.es">Correo</a>
+        </div>
+
+        <!-- Frecuencias -->
+        <div class="frequencies">
+            <h4>Frecuencias:</h4>
+            <ul>
+                <li><b>Tenerife:</b></li>
+                <li>Santa Cruz - 88.3 FM</li>
+                <li>La Laguna - 91.7 FM</li>
+                <li>Zona Sur - 93.7 FM</li>
+                <li>Zona Norte - 88.1 FM</li>
+                <li>Icod De Los Vinos - 102.6 FM</li>
+                <li><b>La Gomera:</b></li>
+                <li>San Sebastián - 94.7 FM</li>
+                <li>Valle Gran Rey - 88.9 FM</li>
+                <li><b>La Palma:</b></li>
+                <li>Los Llanos de Aridane - 94.6 FM</li>
+                <li>Breña Alta - 88.5 FM</li>
+                <li><b>El Hierro:</b></li>
+                <li>Valverde - 99.7 FM</li>
+                <li>Frontera - 88.6 FM</li>
+            </ul>
         </div>
     </div>
 
+    <!-- Script para forzar reproducción automática -->
     <script>
-        // Abrir en una ventana emergente
-        function openPlayerPopup() {
-            const width = 320;
-            const height = 480;
-            const left = (screen.width / 2) - (width / 2);
-            const top = (screen.height / 2) - (height / 2);
-            const popup = window.open(
-                'player.html', // Cambiar esto a la URL donde esté alojado el reproductor
-                'Atlántico Radio Player',
-                `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no`
-            );
-            if (!popup) alert('Habilita las ventanas emergentes para abrir el reproductor.');
-        }
+        window.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.muted = false; // Desactiva el silencio al cargar la página
 
-        // Llamada de prueba (opcional: vincularla a un botón o enlace en tu web principal)
-        // openPlayerPopup();
+            // Intenta reproducir el audio
+            audioPlayer.play().catch(error => {
+                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
+            });
+        });
     </script>
 </body>
 </html>
