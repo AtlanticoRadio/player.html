@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlántico Radio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #player-container {
+            width: 300px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #cover {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        .links a {
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            color: #ff6600; /* Color inspirado en el logo */
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .logo-placeholder {
+            display: none;
+        }
+
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="player-container">
+        <img id="cover" src="ATLANTICO RADIO REDES.jpg" alt="Carátula" onerror="this.src='ATLANTICO RADIO REDES.jpg'">
+        <audio controls autoplay>
+            <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
+            Tu navegador no soporta este reproductor.
+        </audio>
+        <div class="links">
+            <a href="https://www.atlanticoradio.com" target="_blank">Web</a>
+            <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
+            <a href="https://x.com/atlantico_radio" target="_blank">X</a>
+            <a href="https://www.diariodeavisos.com/" target="_blank">Diario de Avisos</a>
+        </div>
+    </div>
+
+    <script>
+        // Abrir en una ventana emergente
+        function openPlayerPopup() {
+            const width = 320;
+            const height = 480;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+            const popup = window.open(
+                'player.html', // Cambiar esto a la URL donde esté alojado el reproductor
+                'Atlántico Radio Player',
+                `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no`
+            );
+            if (!popup) alert('Habilita las ventanas emergentes para abrir el reproductor.');
+        }
+
+        // Llamada de prueba (opcional: vincularla a un botón o enlace en tu web principal)
+        // openPlayerPopup();
+    </script>
+</body>
+</html>
