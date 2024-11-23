@@ -6,80 +6,158 @@
     <title>Atlántico Radio Player</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffffff;
+            text-align: center;
         }
 
         #player-container {
-            width: 1200px; /* Ancho del fondo */
-            height: 600px; /* Alto del fondo */
-            background: url('PLAYER FONDO.png') no-repeat center center;
-            background-size: cover;
-            position: relative;
-            display: flex;
-            justify-content: center; /* Centrar verticalmente y horizontalmente */
-            align-items: center;
+            width: 300px;
+            height: 400px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #f9f9f9;
         }
 
-        /* Reproductor de audio */
-        #audio-player {
-            width: 400px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
+        #cover {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
         }
 
-        /* Linktree */
-        .linktree {
-            position: absolute;
-            bottom: 60px; /* Subido una línea hacia arriba */
-            right: 20px; /* Mantiene el lado derecho */
-            font-size: 18px;
-            font-family: "Helvetica Neue", Arial, sans-serif; /* Tipografía estilo Apple */
-            color: #333333; /* Gris oscuro */
+        audio {
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .linktree a {
+        .links {
+            margin-top: 20px;
+        }
+
+        .links a {
             text-decoration: none;
-            color: #333333; /* Gris oscuro */
-            font-weight: bold;
+            margin: 0 10px;
+            font-size: 14px;
+            color: #ff6600; /* Color inspirado en el logo */
         }
 
-        .linktree a:hover {
+        .links a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div id="player-container">
-        <!-- Reproductor de audio -->
-        <audio id="audio-player" controls autoplay muted>
+        <img id="cover" src="ATLANTICO RADIO REDES.jpg" alt="Carátula" onerror="this.src='ATLANTICO RADIO REDES.jpg'">
+        <audio controls autoplay>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
             Tu navegador no soporta este reproductor.
         </audio>
-
-        <!-- Linktree -->
-        <div class="linktree">
-            <a href="https://linktr.ee/atlanticoradio" target="_blank">Visita nuestro Linktree</a>
+        <div class="links">
+            <a href="https://www.atlanticoradio.es" target="_blank">Web</a>
+            <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
+            <a href="https://x.com/atlantico_radio" target="_blank">X</a>
+            <a href="https://www.diariodeavisos.com/" target="_blank">Diario de Avisos</a>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const audioPlayer = document.getElementById('audio-player');
+        // Abrir en una ventana emergente del tamaño exacto del reproductor
+        function openPlayerPopup() {
+            const width = 320; // Tamaño del player + márgenes
+            const height = 450; // Incluye espacio para controles y margen
+            const left = (screen.width / 2) - (width / 2); // Centrar horizontalmente
+            const top = (screen.height / 2) - (height / 2); // Centrar verticalmente
 
-            // Quitar mute del reproductor al cargar
-            audioPlayer.muted = false;
+            const popup = window.open(
+                '', // El contenido se cargará en el siguiente paso
+                'Atlántico Radio Player',
+                `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no`
+            );
 
-            // Forzar reproducción automática
-            audioPlayer.play().catch(error => {
-                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
-            });
-        });
+            if (popup) {
+                popup.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="es">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Atlántico Radio Player</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                background-color: #fff;
+                                color: #333;
+                                margin: 0;
+                                padding: 0;
+                                text-align: center;
+                            }
+
+                            #player-container {
+                                width: 300px;
+                                height: 400px;
+                                margin: 20px auto;
+                                padding: 10px;
+                                border: 1px solid #ddd;
+                                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                                border-radius: 10px;
+                                background-color: #f9f9f9;
+                            }
+
+                            #cover {
+                                width: 100%;
+                                height: auto;
+                                border-radius: 10px;
+                            }
+
+                            audio {
+                                width: 100%;
+                                margin-top: 10px;
+                            }
+
+                            .links {
+                                margin-top: 20px;
+                            }
+
+                            .links a {
+                                text-decoration: none;
+                                margin: 0 10px;
+                                font-size: 14px;
+                                color: #ff6600; /* Color inspirado en el logo */
+                            }
+
+                            .links a:hover {
+                                text-decoration: underline;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div id="player-container">
+                            <img id="cover" src="ATLANTICO RADIO REDES.jpg" alt="Carátula" onerror="this.src='ATLANTICO RADIO REDES.jpg'">
+                            <audio controls autoplay>
+                                <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
+                                Tu navegador no soporta este reproductor.
+                            </audio>
+                            <div class="links">
+                                <a href="https://www.atlanticoradio.es" target="_blank">Web</a>
+                                <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
+                                <a href="https://x.com/atlantico_radio" target="_blank">X</a>
+                                <a href="https://www.diariodeavisos.com/" target="_blank">Diario de Avisos</a>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Habilita las ventanas emergentes en tu navegador para escuchar Atlántico Radio.');
+            }
+        }
     </script>
 </body>
 </html>
