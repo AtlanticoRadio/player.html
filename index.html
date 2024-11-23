@@ -37,7 +37,7 @@
         .linktree {
             position: absolute;
             bottom: 60px; /* Subido una línea hacia arriba */
-            right: 20px; /* Mantiene el lado derecho */
+            right: 15px; /* Ajustado un carácter más a la derecha */
             font-size: 18px;
             font-family: "Helvetica Neue", Arial, sans-serif; /* Tipografía estilo Apple */
             color: #333333; /* Gris oscuro */
@@ -64,22 +64,4 @@
 
         <!-- Linktree -->
         <div class="linktree">
-            <a href="https://linktr.ee/atlanticoradio" target="_blank">Visita nuestro Linktree</a>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const audioPlayer = document.getElementById('audio-player');
-
-            // Quitar mute del reproductor al cargar
-            audioPlayer.muted = false;
-
-            // Forzar reproducción automática
-            audioPlayer.play().catch(error => {
-                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
-            });
-        });
-    </script>
-</body>
-</html>
+            <a href="https://linktr.ee/atlanticoradio" target="_blank">
