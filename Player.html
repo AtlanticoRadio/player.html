@@ -22,38 +22,12 @@
             background-size: cover;
             position: relative;
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centrar verticalmente */
-            align-items: center; /* Centrar horizontalmente */
-        }
-
-        /* Información de la canción */
-        #track-info {
-            position: absolute;
-            top: 40%; /* Posicionado hacia el centro */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #000000; /* Color negro */
-            font-family: "Helvetica Neue", Arial, sans-serif; /* Tipografía estilo Apple */
-            font-size: 18px;
-            text-align: center;
-        }
-
-        #track-info img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+            justify-content: center; /* Centrar verticalmente y horizontalmente */
+            align-items: center;
         }
 
         /* Reproductor de audio */
         #audio-player {
-            position: absolute;
-            top: 65%; /* Más abajo, cerca del centro */
-            left: 50%;
-            transform: translateX(-50%);
             width: 400px;
             background: rgba(255, 255, 255, 0.8);
             border-radius: 5px;
@@ -63,7 +37,7 @@
         .linktree {
             position: absolute;
             bottom: 20px; /* Colocado cerca del fondo */
-            left: 20px; /* Lado opuesto */
+            right: 20px; /* Lado opuesto */
             font-size: 18px;
             font-family: "Helvetica Neue", Arial, sans-serif; /* Tipografía estilo Apple */
         }
@@ -81,13 +55,6 @@
 </head>
 <body>
     <div id="player-container">
-        <!-- Información de la canción -->
-        <div id="track-info">
-            <img id="track-cover" src="ATLANTICO RADIO REDES.jpg" alt="Logo de Atlántico Radio">
-            <div id="track-artist">Atlántico Radio</div>
-            <div id="track-title">La radio de la que todos hablan</div>
-        </div>
-
         <!-- Reproductor de audio -->
         <audio id="audio-player" controls autoplay muted>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
@@ -103,52 +70,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const audioPlayer = document.getElementById('audio-player');
-            const trackArtist = document.getElementById('track-artist');
-            const trackTitle = document.getElementById('track-title');
-            const trackCover = document.getElementById('track-cover');
 
             // Quitar mute del reproductor al cargar
             audioPlayer.muted = false;
-
-            // Obtener metadatos del stream (simulado)
-            async function fetchStreamMetadata() {
-                // Simulación de los metadatos extraídos del stream
-                const streamMetadata = {
-                    artist: null, // No disponible
-                    title: null // No disponible
-                };
-
-                // Buscar información en la API de iTunes si hay datos
-                if (streamMetadata.artist && streamMetadata.title) {
-                    const query = `${streamMetadata.artist} ${streamMetadata.title}`;
-                    const iTunesApiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&limit=1`;
-
-                    try {
-                        const response = await fetch(iTunesApiUrl);
-                        const data = await response.json();
-
-                        if (data.results && data.results.length > 0) {
-                            const track = data.results[0];
-
-                            // Actualizar información en la interfaz
-                            trackArtist.textContent = track.artistName;
-                            trackTitle.textContent = track.trackName;
-                            trackCover.src = track.artworkUrl100.replace("100x100", "300x300");
-                            return;
-                        }
-                    } catch (error) {
-                        console.error('Error al obtener datos de iTunes:', error);
-                    }
-                }
-
-                // Si no hay datos, usar valores predeterminados
-                trackArtist.textContent = "Atlántico Radio";
-                trackTitle.textContent = "La radio de la que todos hablan";
-                trackCover.src = "ATLANTICO RADIO REDES.jpg";
-            }
-
-            // Cargar metadatos de la canción
-            fetchStreamMetadata();
 
             // Forzar reproducción automática
             audioPlayer.play().catch(error => {
