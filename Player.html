@@ -31,48 +31,19 @@
             border-radius: 5px;
         }
 
-        .frequencies-container {
+        .linktree {
             position: absolute;
             bottom: 20px; /* Colocado cerca de la parte inferior */
             left: 20px; /* Colocado en la esquina izquierda */
-            width: 200px;
-            height: 100px; /* Tamaño del área de scroll */
-            overflow-y: scroll;
-            background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .frequencies-container h4 {
-            margin: 0 0 5px 0;
             font-size: 14px;
-            color: #ff6600; /* Color destacado para "Frecuencias" */
         }
 
-        .frequencies-container ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            font-size: 12px;
-            line-height: 1.5;
-            color: #ffffff;
-        }
-
-        .links {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            text-align: right;
-        }
-
-        .links a {
+        .linktree a {
             text-decoration: none;
-            margin: 0 5px;
-            font-size: 12px;
-            color: #ff6600;
+            color: #ff6600; /* Color destacado */
         }
 
-        .links a:hover {
+        .linktree a:hover {
             text-decoration: underline;
         }
     </style>
@@ -85,35 +56,9 @@
             Tu navegador no soporta este reproductor.
         </audio>
 
-        <!-- Contenedor de frecuencias -->
-        <div class="frequencies-container">
-            <h4>Frecuencias:</h4>
-            <ul>
-                <li><b>Tenerife:</b></li>
-                <li>Santa Cruz - 88.3 FM</li>
-                <li>La Laguna - 91.7 FM</li>
-                <li>Zona Sur - 93.7 FM</li>
-                <li>Zona Norte - 88.1 FM</li>
-                <li>Icod De Los Vinos - 102.6 FM</li>
-                <li><b>La Gomera:</b></li>
-                <li>San Sebastián - 94.7 FM</li>
-                <li>Valle Gran Rey - 88.9 FM</li>
-                <li><b>La Palma:</b></li>
-                <li>Los Llanos de Aridane - 94.6 FM</li>
-                <li>Breña Alta - 88.5 FM</li>
-                <li><b>El Hierro:</b></li>
-                <li>Valverde - 99.7 FM</li>
-                <li>Frontera - 88.6 FM</li>
-            </ul>
-        </div>
-
-        <!-- Enlaces -->
-        <div class="links">
-            <a href="https://www.atlanticoradio.es" target="_blank">Web</a>
-            <a href="https://www.instagram.com/atlantico__radio/" target="_blank">Instagram</a>
-            <a href="https://x.com/atlantico_radio" target="_blank">X</a>
-            <a href="https://www.ivoox.com/escuchar-atlantico-radio_nq_1406464_1.html" target="_blank">iVoox</a>
-            <a href="mailto:hola@atlanticoradio.es">Correo</a>
+        <!-- Linktree -->
+        <div class="linktree">
+            <a href="https://linktr.ee/atlanticoradio" target="_blank">Visita nuestro Linktree</a>
         </div>
     </div>
 
@@ -124,10 +69,4 @@
             audioPlayer.muted = false; // Desactiva el silencio al cargar la página
 
             // Intenta reproducir el audio
-            audioPlayer.play().catch(error => {
-                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
-            });
-        });
-    </script>
-</body>
-</html>
+            audioPlayer.play().
