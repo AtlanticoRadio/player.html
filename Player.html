@@ -118,4 +118,23 @@
                 const trackData = {
                     artist: 'Artista desconocido',
                     title: 'Título desconocido',
-                    cover
+                    cover: 'PLAYER FONDO.png' // Imagen de respaldo
+                };
+
+                // Actualizar la interfaz con la información de la canción
+                trackArtist.textContent = trackData.artist;
+                trackTitle.textContent = trackData.title;
+                trackCover.src = trackData.cover;
+            }
+
+            // Cargar información de la canción
+            fetchTrackInfo();
+
+            // Forzar reproducción automática
+            audioPlayer.play().catch(error => {
+                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
+            });
+        });
+    </script>
+</body>
+</html>
