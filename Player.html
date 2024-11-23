@@ -1,56 +1,95 @@
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const audioPlayer = document.getElementById('audio-player');
-        const trackArtist = document.getElementById('track-artist');
-        const trackTitle = document.getElementById('track-title');
-        const trackCover = document.getElementById('track-cover');
-
-        // Quitar mute del reproductor al cargar
-        audioPlayer.muted = false;
-
-        // Obtener metadatos del stream (simulado)
-        async function fetchStreamMetadata() {
-            // Cambiar por tu lógica real para extraer artista y título
-            const streamMetadata = {
-                artist: "Adele", // Simulación
-                title: "Rolling in the Deep" // Simulación
-            };
-
-            // Buscar información en la API de iTunes
-            const query = `${streamMetadata.artist} ${streamMetadata.title}`;
-            const iTunesApiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&limit=1`;
-
-            try {
-                const response = await fetch(iTunesApiUrl);
-                const data = await response.json();
-
-                if (data.results && data.results.length > 0) {
-                    const track = data.results[0];
-
-                    // Actualizar información en la interfaz
-                    trackArtist.textContent = track.artistName || streamMetadata.artist;
-                    trackTitle.textContent = track.trackName || streamMetadata.title;
-                    trackCover.src = track.artworkUrl100.replace("100x100", "300x300") || 'PLAYER FONDO.png';
-                } else {
-                    // Si no encuentra datos, usar valores predeterminados
-                    trackArtist.textContent = streamMetadata.artist;
-                    trackTitle.textContent = streamMetadata.title;
-                    trackCover.src = 'PLAYER FONDO.png';
-                }
-            } catch (error) {
-                console.error('Error al obtener datos de iTunes:', error);
-                trackArtist.textContent = streamMetadata.artist;
-                trackTitle.textContent = streamMetadata.title;
-                trackCover.src = 'PLAYER FONDO.png';
-            }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlántico Radio Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
         }
 
-        // Cargar metadatos de la canción
-        fetchStreamMetadata();
+        #player-container {
+            width: 1200px; /* Ancho del fondo */
+            height: 600px; /* Alto del fondo */
+            background: url('PLAYER FONDO.png') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centrar verticalmente */
+            align-items: center; /* Centrar horizontalmente */
+        }
 
-        // Forzar reproducción automática
-        audioPlayer.play().catch(error => {
-            console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
-        });
-    });
-</script>
+        /* Información de la canción */
+        #track-info {
+            position: absolute;
+            top: 50%; /* Posicionado hacia el centro */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        #track-info img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Reproductor de audio */
+        #audio-player {
+            position: absolute;
+            top: 70%; /* Más abajo, cerca del centro */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+
+        /* Linktree */
+        .linktree {
+            position: absolute;
+            bottom: 20px; /* Colocado cerca del fondo */
+            left: 20px; /* Lado opuesto */
+            font-size: 18px;
+        }
+
+        .linktree a {
+            text-decoration: none;
+            color: #ff6600;
+            font-weight: bold;
+        }
+
+        .linktree a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="player-container">
+        <!-- Información de la canción -->
+        <div id="track-info">
+            <img id="track-cover" src="PLAYER FONDO.png" alt="Logo de Atlántico Radio">
+            <div id="track-artist">Cargando artista...</div>
+            <div id="track-title">Cargando título...</div>
+        </div>
+
+        <!-- Reproductor de audio -->
+        <audio id="audio-player" controls autoplay muted>
+            <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
+            Tu navegador no soporta este reproductor.
+        </audio>
