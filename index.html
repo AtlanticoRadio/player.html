@@ -14,7 +14,7 @@
 
         #player-container {
             width: 300px;
-            height: 520px; /* Ajustado tras eliminar un enlace */
+            height: 520px;
             margin: 20px auto;
             padding: 10px;
             background: url('PLAYER FONDO.png') no-repeat center center;
@@ -76,7 +76,7 @@
 <body>
     <div id="player-container">
         <!-- Reproductor de audio -->
-        <audio controls autoplay>
+        <audio id="audio-player" controls autoplay muted>
             <source src="https://streaming.atlanticoradio.es/atlanticoradio" type="audio/mpeg">
             Tu navegador no soporta este reproductor.
         </audio>
@@ -112,5 +112,18 @@
             </ul>
         </div>
     </div>
+
+    <!-- Script para forzar reproducción automática -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.muted = false; // Desactiva el silencio al cargar la página
+
+            // Intenta reproducir el audio
+            audioPlayer.play().catch(error => {
+                console.warn('Autoplay no permitido. El usuario debe interactuar con la página.', error);
+            });
+        });
+    </script>
 </body>
 </html>
