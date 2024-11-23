@@ -23,48 +23,48 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Reproductor de audio */
-        #audio-player {
-            position: absolute;
-            top: 40%; /* Ubicación del reproductor */
-            left: 30%;
-            width: 500px;
+            justify-content: center; /* Centrar verticalmente */
+            align-items: center; /* Centrar horizontalmente */
         }
 
         /* Información de la canción */
         #track-info {
             position: absolute;
-            top: 10%; /* Ubicación de la información */
-            left: 10%;
+            top: 40%; /* Posicionado hacia el centro */
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: #ffffff;
             font-family: Arial, sans-serif;
-            font-size: 24px;
+            font-size: 18px;
+            text-align: center;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         #track-info img {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             object-fit: cover;
-            margin-right: 20px;
+            margin-bottom: 10px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
         }
 
-        #track-info .details {
-            display: inline-block;
-            vertical-align: top;
+        /* Reproductor de audio */
+        #audio-player {
+            position: absolute;
+            top: 65%; /* Más abajo, cerca del centro */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
         }
 
         /* Linktree */
         .linktree {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
+            bottom: 20px; /* Colocado cerca del fondo */
+            left: 20px; /* Lado opuesto */
             font-size: 18px;
         }
 
@@ -83,11 +83,9 @@
     <div id="player-container">
         <!-- Información de la canción -->
         <div id="track-info">
-            <img id="track-cover" src="PLAYER FONDO.png" alt="Logo de Atlántico Radio">
-            <div class="details">
-                <div id="track-artist">Cargando artista...</div>
-                <div id="track-title">Cargando título...</div>
-            </div>
+            <img id="track-cover" src="ATLANTICO RADIO REDES.jpg" alt="Logo de Atlántico Radio">
+            <div id="track-artist">Atlántico Radio</div>
+            <div id="track-title">La radio de la que todos hablan</div>
         </div>
 
         <!-- Reproductor de audio -->
@@ -112,23 +110,45 @@
             // Quitar mute del reproductor al cargar
             audioPlayer.muted = false;
 
-            // Simular la obtención de datos de la canción (personalizable con API)
-            function fetchTrackInfo() {
-                // Aquí puedes integrar la lógica para obtener metadatos del stream o de una API externa
-                const trackData = {
-                    artist: 'Artista desconocido',
-                    title: 'Título desconocido',
-                    cover: 'PLAYER FONDO.png' // Imagen de respaldo
+            // Obtener metadatos del stream (simulado)
+            async function fetchStreamMetadata() {
+                // Simulación de los metadatos extraídos del stream
+                const streamMetadata = {
+                    artist: null, // No disponible
+                    title: null // No disponible
                 };
 
-                // Actualizar la interfaz con la información de la canción
-                trackArtist.textContent = trackData.artist;
-                trackTitle.textContent = trackData.title;
-                trackCover.src = trackData.cover;
+                // Buscar información en la API de iTunes si hay datos
+                if (streamMetadata.artist && streamMetadata.title) {
+                    const query = `${streamMetadata.artist} ${streamMetadata.title}`;
+                    const iTunesApiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&limit=1`;
+
+                    try {
+                        const response = await fetch(iTunesApiUrl);
+                        const data = await response.json();
+
+                        if (data.results && data.results.length > 0) {
+                            const track = data.results[0];
+
+                            // Actualizar información en la interfaz
+                            trackArtist.textContent = track.artistName;
+                            trackTitle.textContent = track.trackName;
+                            trackCover.src = track.artworkUrl100.replace("100x100", "300x300");
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('Error al obtener datos de iTunes:', error);
+                    }
+                }
+
+                // Si no hay datos, usar valores predeterminados
+                trackArtist.textContent = "Atlántico Radio";
+                trackTitle.textContent = "La radio de la que todos hablan";
+                trackCover.src = "ATLANTICO RADIO REDES.jpg";
             }
 
-            // Cargar información de la canción
-            fetchTrackInfo();
+            // Cargar metadatos de la canción
+            fetchStreamMetadata();
 
             // Forzar reproducción automática
             audioPlayer.play().catch(error => {
